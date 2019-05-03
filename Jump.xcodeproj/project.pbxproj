@@ -15,6 +15,13 @@
 		9D07A77C226EB5A500946F06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D07A77A226EB5A500946F06 /* Main.storyboard */; };
 		9D07A77E226EB5A800946F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D07A77D226EB5A800946F06 /* Assets.xcassets */; };
 		9D07A781226EB5A800946F06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D07A77F226EB5A800946F06 /* LaunchScreen.storyboard */; };
+		9D07A789226EBBD400946F06 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D07A788226EBBD400946F06 /* MenuScene.sks */; };
+		9D07A78C226EC12600946F06 /* BACKTO1982.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9D07A78B226EC10600946F06 /* BACKTO1982.TTF */; };
+		9D07A78E226EC45B00946F06 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D07A78D226EC45B00946F06 /* MenuScene.swift */; };
+		9D07A790226EC9B800946F06 /* EndlessBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D07A78F226EC9B800946F06 /* EndlessBackground.swift */; };
+		9D336D58227C14E40011EEFD /* dinosaur.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9D336D55227C14E30011EEFD /* dinosaur.wav */; };
+		9D336D59227C14E40011EEFD /* hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9D336D56227C14E30011EEFD /* hit.wav */; };
+		9D336D5A227C14E40011EEFD /* theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9D336D57227C14E40011EEFD /* theme.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +35,13 @@
 		9D07A77D226EB5A800946F06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D07A780226EB5A800946F06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D07A782226EB5A800946F06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D07A788226EBBD400946F06 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
+		9D07A78B226EC10600946F06 /* BACKTO1982.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = BACKTO1982.TTF; sourceTree = "<group>"; };
+		9D07A78D226EC45B00946F06 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		9D07A78F226EC9B800946F06 /* EndlessBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndlessBackground.swift; sourceTree = "<group>"; };
+		9D336D55227C14E30011EEFD /* dinosaur.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dinosaur.wav; sourceTree = "<group>"; };
+		9D336D56227C14E30011EEFD /* hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hit.wav; sourceTree = "<group>"; };
+		9D336D57227C14E40011EEFD /* theme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = theme.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,17 +74,40 @@
 		9D07A76F226EB5A500946F06 /* Jump */ = {
 			isa = PBXGroup;
 			children = (
+				9D336D52227C12F20011EEFD /* sounds */,
+				9D07A78A226EC08400946F06 /* fonts */,
 				9D07A770226EB5A500946F06 /* AppDelegate.swift */,
+				9D07A78F226EC9B800946F06 /* EndlessBackground.swift */,
 				9D07A772226EB5A500946F06 /* GameScene.sks */,
-				9D07A774226EB5A500946F06 /* Actions.sks */,
 				9D07A776226EB5A500946F06 /* GameScene.swift */,
+				9D07A774226EB5A500946F06 /* Actions.sks */,
 				9D07A778226EB5A500946F06 /* GameViewController.swift */,
 				9D07A77A226EB5A500946F06 /* Main.storyboard */,
 				9D07A77D226EB5A800946F06 /* Assets.xcassets */,
+				9D07A788226EBBD400946F06 /* MenuScene.sks */,
+				9D07A78D226EC45B00946F06 /* MenuScene.swift */,
 				9D07A77F226EB5A800946F06 /* LaunchScreen.storyboard */,
 				9D07A782226EB5A800946F06 /* Info.plist */,
 			);
 			path = Jump;
+			sourceTree = "<group>";
+		};
+		9D07A78A226EC08400946F06 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9D07A78B226EC10600946F06 /* BACKTO1982.TTF */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		9D336D52227C12F20011EEFD /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				9D336D55227C14E30011EEFD /* dinosaur.wav */,
+				9D336D56227C14E30011EEFD /* hit.wav */,
+				9D336D57227C14E40011EEFD /* theme.mp3 */,
+			);
+			path = sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,9 +168,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D07A78C226EC12600946F06 /* BACKTO1982.TTF in Resources */,
 				9D07A77C226EB5A500946F06 /* Main.storyboard in Resources */,
+				9D07A789226EBBD400946F06 /* MenuScene.sks in Resources */,
 				9D07A773226EB5A500946F06 /* GameScene.sks in Resources */,
+				9D336D5A227C14E40011EEFD /* theme.mp3 in Resources */,
 				9D07A77E226EB5A800946F06 /* Assets.xcassets in Resources */,
+				9D336D58227C14E40011EEFD /* dinosaur.wav in Resources */,
+				9D336D59227C14E40011EEFD /* hit.wav in Resources */,
 				9D07A781226EB5A800946F06 /* LaunchScreen.storyboard in Resources */,
 				9D07A775226EB5A500946F06 /* Actions.sks in Resources */,
 			);
@@ -147,6 +189,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D07A777226EB5A500946F06 /* GameScene.swift in Sources */,
+				9D07A78E226EC45B00946F06 /* MenuScene.swift in Sources */,
+				9D07A790226EC9B800946F06 /* EndlessBackground.swift in Sources */,
 				9D07A779226EB5A500946F06 /* GameViewController.swift in Sources */,
 				9D07A771226EB5A500946F06 /* AppDelegate.swift in Sources */,
 			);

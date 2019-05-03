@@ -9,81 +9,104 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
-    
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+class GameScene: SKScene, SKPhysicsContactDelegate {
+    var sky: EndlessBackground!
+    var forest: EndlessBackground!
+    var ground: EndlessBackground!
+    var girl: SKSpriteNode!
+    var dino: SKSpriteNode!
+    var isOver = false
+    var score = 0
     
     override func didMove(to view: SKView) {
+        sky = EndlessBackground(parent: self, sprite: self.childNode(withName: "sky") as! SKSpriteNode, speed: 1)
+       forest = EndlessBackground(parent: self, sprite: self.childNode(withName: "forest") as! SKSpriteNode, speed: 3)
+        ground = EndlessBackground(parent: self, sprite: self.childNode(withName: "ground") as! SKSpriteNode, speed: 6)
+        dino = self.childNode(withName: "dino") as! SKSpriteNode!
+        girl = self.childNode(withName: "girl") as! SKSpriteNode!
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+        let backgroundMusic = SKAudioNode(fileNamed: "theme.mp3")
+        backgroundMusic.autoplayLooped = true
+        self.addChild(backgroundMusic)
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+        let dino_move = SKAction.moveTo(x: -783, duration: 6)
+        dino.run(dino_move, withKey: "dino_run")
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
+        physicsWorld.contactDelegate = self
     }
     
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
+    override func update(_ currentTime: TimeInterval) {
+        sky.update()
+        forest.update()
+        ground.update()
+        updateDino()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+        if girl.physicsBody?.velocity.dy == 0 && !isOver {
+            self.run(SKAction.playSoundFileNamed("hit.wav", waitForCompletion: false))
+            girl.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 70))
         }
+        if isOver{
+            for touch in touches {
+                let homeButton = self.childNode(withName: "home") as! SKSpriteNode
+                
+                if homeButton.contains(touch.location(in: self)){
+                    if let scene = SKScene(fileNamed: "MenuScene") {
+                        // Set the scale mode to scale to fit the window
+                        scene.scaleMode = .aspectFit
+                        
+                        // Present the scene
+                        self.view?.presentScene(scene,transition: .doorsOpenVertical(withDuration: 1))
+                    }
+
+                }
+            }
+        }
+    }
+    
+    func updateDino(){
+        if dino.position.x + dino.size.width < 0 {
+              self.run(SKAction.playSoundFileNamed("dinosaur.wav", waitForCompletion: false))
+            dino.position.x = self.size.width
+            
+            score += 1
+            let scoreLabel = self.childNode(withName: "score") as! SKLabelNode
+            scoreLabel.text = "Score: \(score)"
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+            dino.removeAction(forKey: "dino_run")
+            let randomTime = TimeInterval(arc4random_uniform(6) + 3)
+            let dino_move = SKAction.moveTo(x: -783, duration: randomTime)
+            dino.run(dino_move, withKey: "dino_run")
+            
+        }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+    func didBegin(_ contact: SKPhysicsContact) {
+        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        if contactMask == 2 | 4 {
+            gameOver()
+        }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    func gameOver(){
+        isOver = true
+        dino.removeAllActions()
+        girl.removeAllActions()
+        
+        ground.stop()
+        forest.stop()
+        sky.stop()
+        
+        showGameOver()
     }
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+    func showGameOver(){
+        let gameOverLabel = self.childNode(withName: "gameover") as! SKLabelNode
+        let homeButton = self.childNode(withName: "home") as! SKSpriteNode
+        
+        gameOverLabel.position.x = (self.view?.center.x)!
+        homeButton.position.x = (self.view?.center.x)!
+        
     }
 }
